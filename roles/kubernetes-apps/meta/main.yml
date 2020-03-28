@@ -66,3 +66,11 @@ dependencies:
       - inventory_hostname == groups['kube-master'][0]
     tags:
       - oci
+
+  - role: kubernetes-apps/cloud_controller/vsphere
+    when:
+      - cloud_provider is defined
+      - cloud_provider == "vsphere"
+      - inventory_hostname == groups['kube-master'][0]
+    tags:
+      - vsphere

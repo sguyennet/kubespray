@@ -1,0 +1,4 @@
+---
+
+vsphere_cloud_controller_version: "v1.1.0"
+vsphere_cloud_controller_pull_source: "{{ gcr_image_repo }}/cloud-provider-vsphere/cpi/release/manager"
