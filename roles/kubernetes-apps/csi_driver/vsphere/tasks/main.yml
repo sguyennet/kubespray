@@ -1,0 +1,46 @@
+---
+- include_tasks: vsphere-credential-check.yml
+  tags: vsphere-csi-driver
+
+- name: vSphere CSI Driver | Write csi-vsphere.conf
+  template:
+    src: "vsphere-csi-config.j2"
+    dest: "{{ kube_config_dir }}/csi-vsphere.conf"
+    group: "{{ kube_cert_group }}"
+    mode: 0640
+  when: inventory_hostname == groups['kube-master'][0]
+  tags: vsphere-csi-driver
+
+- name: vSphere CSI Driver | Get base64 csi-vsphere.conf
+  slurp:
+    src: "{{ kube_config_dir }}/csi-vsphere.conf"
+  register: csi_vsphere_config_secret
+  when: inventory_hostname == groups['kube-master'][0]
+  tags: vsphere-csi-driver
+
+- name: vSphere CSI Driver | Generate Manifests
+  template:
+    src: "{{ item.file }}.j2"
+    dest: "{{ kube_config_dir }}/{{ item.file }}"
+  with_items:
+    - {name: vsphere-csi-config-secret, file: vsphere-csi-config-secret.yml}
+    - {name: vsphere-csi-controller, file: vsphere-csi-controller-rbac.yml}
+    - {name: vsphere-csi-controller, file: vsphere-csi-controller.yml}
+    - {name: vsphere-csi-node, file: vsphere-csi-node.yml}
+  register: vsphere_csi_manifests
+  when: inventory_hostname == groups['kube-master'][0]
+  tags: vsphere-csi-driver
+
+- name: vSphere CSI Driver | Apply Manifests
+  kube:
+    kubectl: "{{ bin_dir }}/kubectl"
+    filename: "{{ kube_config_dir }}/{{ item.item.file }}"
+    state: "latest"
+  with_items:
+    - "{{ vsphere_csi_manifests.results }}"
+  when:
+    - inventory_hostname == groups['kube-master'][0]
+    - not item is skipped
+  loop_control:
+    label: "{{ item.item.file }}"
+  tags: vsphere-csi-driver

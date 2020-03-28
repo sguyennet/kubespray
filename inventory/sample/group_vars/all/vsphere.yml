@@ -1,0 +1,15 @@
+## When vSphere is used, you need to also set the following variables.
+# vsphere_vcenter_ip:
+# vsphere_vcenter_port:
+# vsphere_insecure:
+# vsphere_user:
+# vsphere_password:
+# vsphere_datacenter:
+# vsphere_datastore:
+# vsphere_working_dir:
+# vsphere_scsi_controller_type:
+# vsphere_resource_pool:
+
+## To use vSphere CSI plugin to provision volumes set this value to true
+# vsphere_csi_enabled: true
+# vsphere_csi_controller_replicas: 1

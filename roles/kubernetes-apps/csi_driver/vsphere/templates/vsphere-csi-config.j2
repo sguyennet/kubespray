@@ -1,0 +1,9 @@
+[Global]
+cluster-id = "{{ vsphere_cluster_id }}"
+
+[VirtualCenter "{{ vsphere_vcenter_ip }}"]
+insecure-flag = "{{ vsphere_insecure }}"
+user = "{{ vsphere_user }}"
+password = "{{ vsphere_password }}"
+port = "{{ vsphere_vcenter_port }}"
+datacenters = "{{ vsphere_datacenter }}"

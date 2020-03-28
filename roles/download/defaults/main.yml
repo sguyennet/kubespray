@@ -507,6 +507,19 @@ cinder_csi_plugin_image_tag: "latest"
 cinder_csi_node_driver_registrar_image_repo: "{{ quay_image_repo }}/k8scsi/csi-node-driver-registrar"
 cinder_csi_node_driver_registrar_image_tag: "v1.1.0"
 
+vsphere_csi_attacher_image_repo: "{{ quay_image_repo }}/k8scsi/csi-attacher"
+vsphere_csi_attacher_image_tag: "v1.1.1"
+vsphere_csi_driver_image_repo: "{{ gcr_image_repo }}/cloud-provider-vsphere/csi/release/driver"
+vsphere_csi_driver_image_tag: "v1.0.2"
+vsphere_csi_livenessprobe_image_repo: "{{ quay_image_repo }}/k8scsi/livenessprobe"
+vsphere_csi_livenessprobe_image_tag: "v1.1.0"
+vsphere_csi_syncer_image_repo: "{{ gcr_image_repo }}/cloud-provider-vsphere/csi/release/syncer"
+vsphere_csi_syncer_image_tag: "v1.0.2"
+vsphere_csi_provisioner_image_repo: "{{ quay_image_repo }}/k8scsi/csi-provisioner"
+vsphere_csi_provisioner_image_tag: "v1.2.2"
+vsphere_csi_node_driver_registrar_image_repo: "{{ quay_image_repo }}/k8scsi/csi-node-driver-registrar"
+vsphere_csi_node_driver_registrar_image_tag: "v1.1.0"
+
 dashboard_image_repo: "{{ gcr_image_repo }}/google_containers/kubernetes-dashboard-{{ image_arch }}"
 dashboard_image_tag: "v1.10.1"
 
@@ -1062,6 +1075,24 @@ downloads:
     repo: "{{ cinder_csi_node_driver_registrar_image_repo }}"
     tag: "{{ cinder_csi_node_driver_registrar_image_tag }}"
     sha256: "{{ cinder_csi_node_driver_registrar_digest_checksum|default(None) }}"
+    groups:
+      - kube-node
+
+  vsphere_csi_driver:
+    enabled: "{{ vsphere_csi_enabled }}"
+    container: true
+    repo: "{{ vsphere_csi_driver_image_repo }}"
+    tag: "{{ vsphere_csi_driver_image_tag }}"
+    sha256: "{{ vsphere_csi_driver_digest_checksum|default(None) }}"
+    groups:
+      - kube-node
+
+  vsphere_csi_syncer:
+    enabled: "{{ vsphere_csi_enabled }}"
+    container: true
+    repo: "{{ vsphere_csi_syncer_image_repo }}"
+    tag: "{{ vsphere_csi_syncer_image_tag }}"
+    sha256: "{{ vsphere_csi_syncer_digest_checksum|default(None) }}"
     groups:
       - kube-node
 

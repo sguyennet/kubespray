@@ -1,0 +1,9 @@
+---
+vsphere_vcenter_ip: "{{ lookup('env', 'VSPHERE_VCENTER') }}"
+vsphere_vcenter_port: "{{ lookup('env', 'VSPHERE_VCENTER_PORT') }}"
+vsphere_user: "{{ lookup('env', 'VSPHERE_USER') }}"
+vsphere_password: "{{ lookup('env', 'VSPHERE_PASSWORD') }}"
+vsphere_datacenter: "{{ lookup('env', 'VSPHERE_DATACENTER') }}"
+vsphere_insecure: "{{ lookup('env', 'VSPHERE_INSECURE') }}"
+vsphere_cluster_id: "{{ 99999999 | random | to_uuid }}"
+vsphere_csi_controller_replicas: 1
