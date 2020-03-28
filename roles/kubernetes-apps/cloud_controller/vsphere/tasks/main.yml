@@ -10,7 +10,8 @@
   with_items:
     - {name: vsphere-config, file: vsphere-config-configmap.yml}
     - {name: vsphere-config, file: vsphere-config-secret.yml}
-    
+    - {name: vsphere-cloud-controller, file: vsphere-cloud-controller-rbac.yml}
+    - {name: vsphere-cloud-controller, file: vsphere-cloud-controller.yml}
   register: vsphere_cloud_controller_manifests
   when: inventory_hostname == groups['kube-master'][0]
   tags: vsphere
